@@ -5,6 +5,7 @@ from torch import Tensor
 from transformers import AutoConfig
 from transformers.modeling_outputs import ModelOutput
 
+from PIL import Image
 from typing import Any, Dict, Generic, TypeVar
 
 T = TypeVar("T")
@@ -86,10 +87,11 @@ class VisionBlock(AIBlock[T]):
 
     def preprocess(self, input:Any, **kwargs) -> Dict[str, Tensor]:
 
-        if input.dtype() != Image:
-            raise InputVar
-        self.height, self.width = input_data.height, input_data.width
-        inputs = self._processor(images=input_data, return_tensors="pt")
+        if not isinstance(input, Image.Image):
+            raise TypeError("Input must be a PIL.Image.Image")
+
+        self.height, self.width = input.height, input.width
+        inputs = self._processor(images=input, return_tensors="pt")
         return inputs
 
 
