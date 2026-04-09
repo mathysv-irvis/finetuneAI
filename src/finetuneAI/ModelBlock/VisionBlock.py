@@ -18,8 +18,6 @@ class _LazyTaskMapping(dict):
         "basic-segmentation"        : ("AutoModelForImageSegmentation", "AutoImageProcessor"),
         "universal-segmentation"    : ("Mask2FormerForUniversalSegmentation", "AutoImageProcessor"),
         "semantic-segmentation"     : ("SegformerForSemanticSegmentation", "SegformerImageProcessor"),
-        # ====== LLM ======
-        "llm"                       : ("AutoModelForCausalLM", "AutoTokenizer")
     }
 
     def __getitem__(self, key):
