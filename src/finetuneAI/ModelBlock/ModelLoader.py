@@ -70,3 +70,30 @@ class ModelLoader(ABC, Generic[T]):
         raise NotImplementedError
 
 
+class _LazyTaskMapping(dict):
+
+    def __init__(self, mapping_tasks:dict):
+        self._mapping_tasks = mapping_tasks
+
+    def __getitem__(self, key):
+        if key not in self._mapping_tasks:
+            raise KeyError(key)
+        model, processor = self._mapping_tasks[key]
+        module = __import__("transformers", fromlist=[model, processor])
+        return getattr(module, model), getattr(module, processor)
+
+    def __contains__(self, key):
+        return key in self._mapping_tasks
+
+
+    def __iter__(self):
+        return iter(self._mapping_tasks)
+
+    def __len__(self):
+        return len(self._mapping_tasks)
+
+    @property
+    def keys(self):
+        return self._mapping_tasks.keys()
+
+
