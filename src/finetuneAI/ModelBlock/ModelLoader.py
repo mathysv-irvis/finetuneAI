@@ -32,10 +32,6 @@ class ModelLoader(ABC, Generic[T]):
         return self._model_name
 
     @property
-    def model_type(self):
-        return self._model_type
-
-    @property
     def tokenizer(self):
         if self.__getattr__('_tokenizer') == None :
             raise AttributeError("LLM model not loaded yet, has no tokenizer yet !")
