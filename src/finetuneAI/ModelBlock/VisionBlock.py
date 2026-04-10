@@ -1,4 +1,4 @@
-from .AIBlock import AIBlock
+from .ModelLoader import ModelLoader
 
 from torch import Tensor
 
@@ -44,7 +44,7 @@ class _LazyTaskMapping(dict):
 
 MODALITY_TO_TASK_MAPPING = _LazyTaskMapping()
 
-class VisionBlock(AIBlock[T]):
+class VisionBlock(ModelLoader[T]):
 
     _MAPPING_MODELS = {
         "YolosForObjectDetection"               : "detection",
